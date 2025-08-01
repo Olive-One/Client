@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* Tailwind v4 theme configuration */
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.141 0.005 285.823);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.141 0.005 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.141 0.005 285.823);
+  --color-primary: oklch(0.471 0.217 272.1);
+  --color-primary-foreground: oklch(0.969 0.016 293.756);
+  --color-secondary: oklch(0.967 0.001 286.375);
+  --color-secondary-foreground: oklch(0.21 0.006 285.885);
+  --color-muted: oklch(0.967 0.001 286.375);
+  --color-muted-foreground: oklch(0.552 0.016 285.938);
+  --color-accent: oklch(0.967 0.001 286.375);
+  --color-accent-foreground: oklch(0.21 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.969 0.016 293.756);
+  --color-border: oklch(0.92 0.004 286.32);
+  --color-input: oklch(0.92 0.004 286.32);
+  --color-ring: oklch(0.471 0.217 272.1);
+  
+  --radius: 0.65rem;
+}
+
+/* Custom CSS variables for dynamic theming */
+:root {
+  --theme-background: var(--color-background);
+  --theme-foreground: var(--color-foreground);
+  --theme-card: var(--color-card);
+  --theme-card-foreground: var(--color-card-foreground);
+  --theme-popover: var(--color-popover);
+  --theme-popover-foreground: var(--color-popover-foreground);
+  --theme-primary: var(--color-primary);
+  --theme-primary-foreground: var(--color-primary-foreground);
+  --theme-secondary: var(--color-secondary);
+  --theme-secondary-foreground: var(--color-secondary-foreground);
+  --theme-muted: var(--color-muted);
+  --theme-muted-foreground: var(--color-muted-foreground);
+  --theme-accent: var(--color-accent);
+  --theme-accent-foreground: var(--color-accent-foreground);
+  --theme-destructive: var(--color-destructive);
+  --theme-destructive-foreground: var(--color-destructive-foreground);
+  --theme-border: var(--color-border);
+  --theme-input: var(--color-input);
+  --theme-ring: var(--color-ring);
+  --theme-cardBackground: var(--color-card-bg);
+  --theme-card-border: transparent;
+
+}
+
+/* Dark theme */
+.dark {
+  --theme-background: oklch(0.141 0.005 285.823);
+  --theme-foreground: oklch(0.985 0 0);
+  --theme-card: oklch(0.21 0.006 285.885);
+  --theme-card-foreground: oklch(0.985 0 0);
+  --theme-popover: oklch(0.21 0.006 285.885);
+  --theme-popover-foreground: oklch(0.985 0 0);
+  --theme-primary: oklch(0.471 0.217 272.1);
+  --theme-primary-foreground: oklch(0.969 0.016 293.756);
+  --theme-secondary: oklch(0.274 0.006 286.033);
+  --theme-secondary-foreground: oklch(0.985 0 0);
+  --theme-muted: oklch(0.274 0.006 286.033);
+  --theme-muted-foreground: oklch(0.705 0.015 286.067);
+  --theme-accent: oklch(0.274 0.006 286.033);
+  --theme-accent-foreground: oklch(0.985 0 0);
+  --theme-destructive: oklch(0.704 0.191 22.216);
+  --theme-destructive-foreground: oklch(0.969 0.016 293.756);
+  --theme-border: oklch(0.274 0.006 286.033);
+  --theme-input: oklch(0.274 0.006 286.033);
+  --theme-ring: oklch(0.471 0.217 272.1);
+  --theme-cardBackground: oklch(0.13 0.03 262);
+  --theme-card-border: oklch(0.50 0.24 302);
+}
+
+/* Apply theme variables to Tailwind colors */
+body {
+  background-color: var(--theme-background);
+  color: var(--theme-foreground);
+}
+
+/* Smooth transitions */
+*,
+*::before,
+*::after {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* Utility classes that use theme variables */
+.bg-background { background-color: var(--theme-background); }
+.bg-foreground { background-color: var(--theme-foreground); }
+.bg-card { background-color: var(--theme-card); }
+.bg-card-foreground { background-color: var(--theme-card-foreground); }
+.bg-popover { background-color: var(--theme-popover); }
+.bg-popover-foreground { background-color: var(--theme-popover-foreground); }
+.bg-primary { background-color: var(--theme-primary); }
+.bg-primary-foreground { background-color: var(--theme-primary-foreground); }
+.bg-secondary { background-color: var(--theme-secondary); }
+.bg-secondary-foreground { background-color: var(--theme-secondary-foreground); }
+.bg-muted { background-color: var(--theme-muted); }
+.bg-muted-foreground { background-color: var(--theme-muted-foreground); }
+.bg-accent { background-color: var(--theme-accent); }
+.bg-accent-foreground { background-color: var(--theme-accent-foreground); }
+.bg-destructive { background-color: var(--theme-destructive); }
+.bg-destructive-foreground { background-color: var(--theme-destructive-foreground); }
+
+.text-background { color: var(--theme-background); }
+.text-foreground { color: var(--theme-foreground); }
+.text-card { color: var(--theme-card); }
+.text-card-foreground { color: var(--theme-card-foreground); }
+.text-popover { color: var(--theme-popover); }
+.text-popover-foreground { color: var(--theme-popover-foreground); }
+.text-primary { color: var(--theme-primary); }
+.text-primary-foreground { color: var(--theme-primary-foreground); }
+.text-secondary { color: var(--theme-secondary); }
+.text-secondary-foreground { color: var(--theme-secondary-foreground); }
+.text-muted { color: var(--theme-muted); }
+.text-muted-foreground { color: var(--theme-muted-foreground); }
+.text-accent { color: var(--theme-accent); }
+.text-accent-foreground { color: var(--theme-accent-foreground); }
+.text-destructive { color: var(--theme-destructive); }
+.text-destructive-foreground { color: var(--theme-destructive-foreground); }
+
+.border-border { border-color: var(--theme-border); }
+.border-input { border-color: var(--theme-input); }
+.border-ring { border-color: var(--theme-ring); }
+.border-primary { border-color: var(--theme-primary); }
+.border-card-border { border-color: var(--theme-card-border); }
+
+/* Card border utilities for dark theme only */
+.dark .dark-card-border {
+  border-width: 1px;
+  border-color: var(--theme-card-border);
+}
