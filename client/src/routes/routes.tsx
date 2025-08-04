@@ -24,6 +24,7 @@ import Payments from '@/pages/Payments';
 import Users from '@/pages/Users';
 import RoleGuard from '@/components/shared/utility/RoleGuard';
 import { UserPermissions } from '@/constants/role.constants';
+import Roles from '@/pages/Roles';
 
 const ErrorBoundary = () => {
   useRouteError();
@@ -54,14 +55,14 @@ export const AuthenticatedRoutes = (
               </RoleGuard>
             }
           />
-          {/* <Route
+          <Route
             path="roles"
             element={
               <RoleGuard role={UserPermissions.ROLES_READ} enableRedirect>
-                <UserRolesTable />
+                <Roles />
               </RoleGuard>
             }
-          /> */}
+          />
         </Route>
         {/* <Route path="/diocese">
           <Route index element={<Navigate to="/diocese/manage-dioceses" replace />} />
