@@ -20,6 +20,10 @@ import Login from '@/pages/Login';
 // import Users from '@/pages/super-admin/users/Users';
 // import OrganizationDetailLayout from '@/pages/organization/OrganizationDetailLayout';
 import AuthenticateRoutes from '@/router/AuthenticateRoutes';
+import Payments from '@/pages/Payments';
+import Users from '@/pages/Users';
+import RoleGuard from '@/components/shared/utility/RoleGuard';
+import { UserPermissions } from '@/constants/role.constants';
 
 const ErrorBoundary = () => {
   useRouteError();
@@ -39,6 +43,26 @@ export const AuthenticatedRoutes = (
             // </RoleGuard>
           }
         />
+        <Route path="/payments" element={<Payments />} />
+        <Route path="/admin">
+          <Route element={<RoleGuard role={UserPermissions.ADMIN_READ} enableRedirect><Navigate to="/admin/users" replace /></RoleGuard>} />
+          <Route
+            path="users"
+            element={
+              <RoleGuard role={UserPermissions.USERS_READ} enableRedirect>
+                <Users />
+              </RoleGuard>
+            }
+          />
+          {/* <Route
+            path="roles"
+            element={
+              <RoleGuard role={UserPermissions.ROLES_READ} enableRedirect>
+                <UserRolesTable />
+              </RoleGuard>
+            }
+          /> */}
+        </Route>
         {/* <Route path="/diocese">
           <Route index element={<Navigate to="/diocese/manage-dioceses" replace />} />
           <Route

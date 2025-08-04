@@ -17,7 +17,7 @@ interface CustomModalProps {
   onClose: () => void;
   children: React.ReactNode;
   footer?: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | 'full';
   contentStyles?: React.CSSProperties;
   bodyStyles?: React.CSSProperties;
   footerStyles?: React.CSSProperties;
@@ -50,6 +50,18 @@ const CustomModal: React.FC<CustomModalProps> = ({
         return 'sm:max-w-lg';
       case 'xl':
         return 'sm:max-w-xl';
+      case '2xl':
+        return 'sm:max-w-2xl';
+      case '3xl':
+        return 'sm:max-w-3xl';
+      case '4xl':
+        return 'sm:max-w-4xl';
+      case '5xl':
+        return 'sm:max-w-5xl';
+      case '6xl':
+        return 'sm:max-w-6xl';
+      case 'full':
+        return 'sm:max-w-full';
       default:
         return 'sm:max-w-md';
     }
@@ -58,8 +70,9 @@ const CustomModal: React.FC<CustomModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose} {...rest}>
       <DialogContent 
-        className={`${getSizeClass()} shadow-md border-0 dark-card-border`}
+        className={`${getSizeClass()} max-h-[90vh] shadow-md border-0 dark-card-border flex flex-col`}
         style={contentStyles}
+        showCloseButton={false}
       >
         {title && (
           <DialogHeader className="relative">
@@ -87,7 +100,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
             )}
           </DialogHeader>
         )}
-        <div className="py-4" style={bodyStyles}>
+        <div className="py-4 flex-1 overflow-y-auto min-h-0" style={bodyStyles}>
           {children}
         </div>
         {footer && (

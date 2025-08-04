@@ -1,4 +1,4 @@
-import type { MultiSelectOption } from '@/components/shared/AsyncSelectDropdown/AsyncSelectDropDown';
+import type { MultiSelectOption } from '@/components/shared/Form/AsyncSelectDropdownField';
 import type { UserRolePermissions } from './role.types';
 
 export enum UserStatus {
@@ -143,3 +143,63 @@ export type ChangePasswordPayload = {
   oldPassword: string;
   newPassword: string;
 };
+
+// Form-specific types for create/edit user flow
+export interface CreateUserFormData {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  roleOption: MultiSelectOption;
+  phoneNumber: string;
+  gender?: MultiSelectOption;
+  age?: number;
+  diocese?: MultiSelectOption;
+  church?: MultiSelectOption;
+  familyId?: string;
+}
+
+export interface CreateUserPayload {
+  id?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  userRole: string;
+  phoneNo: PhoneNo;
+  gender?: Gender;
+  age?: number;
+  dioceseId?: string;
+  churchId?: string;
+  familyId?: string;
+}
+
+
+
+export interface CreateUserProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface EditUserProps {
+  isOpen: boolean;
+  onClose: () => void;
+  userId: string;
+}
+
+export enum UserRole {
+  DIOCESE_ADMIN = 'DIOCESE_ADMIN',
+  CHURCH_ADMIN = 'CHURCH_ADMIN',
+  CHURCH_MEMBER = 'CHURCH_MEMBER',
+}
+
+export const USER_ROLE_LABELS = {
+  [UserRole.DIOCESE_ADMIN]: 'Diocese Admin',
+  [UserRole.CHURCH_ADMIN]: 'Church Admin', 
+  [UserRole.CHURCH_MEMBER]: 'Church Member',
+};
+
+export const GENDER_OPTIONS = [
+  { id: 'MALE', label: 'Male' },
+  { id: 'FEMALE', label: 'Female' },
+  { id: 'OTHERS', label: 'Others' },
+];

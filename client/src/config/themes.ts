@@ -30,7 +30,7 @@ export const lightTheme: ThemeColors = {
   cardForeground: 'oklch(0.25 0.08 285)',
   popover: 'oklch(1 0 0)',
   popoverForeground: 'oklch(0.25 0.08 285)',
-  primary: 'oklch(0.35 0.12 285)',
+  primary: 'oklch(0.50 0.24 302)',
   primaryForeground: 'oklch(1 0 0)',
   secondary: 'oklch(0.95 0.002 285)',
   secondaryForeground: 'oklch(0.25 0.08 285)',
