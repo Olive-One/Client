@@ -32,7 +32,7 @@ const AsyncSelectDropdown: React.FC<MultiSelectCompPropInf> = ({
   placeholder,
   isMulti = false,
   isDisabled = false,
-  maxMenuHeight = 180,
+  maxMenuHeight = 240,
   loadOptions,
   cacheOptions = true,
   isClearable = true,
@@ -206,10 +206,10 @@ const AsyncSelectDropdown: React.FC<MultiSelectCompPropInf> = ({
 
       {isOpen && (
         <div
-          className="absolute z-[9999] w-full mt-1 bg-popover border border-border rounded-md shadow-lg"
-          style={{ maxHeight: maxMenuHeight }}
+          className="absolute z-50 w-full mt-1 bg-popover border border-border rounded-md shadow-lg overflow-hidden"
+          style={{ maxHeight: `${maxMenuHeight}px` }}
         >
-          <div className="overflow-auto max-h-full">
+          <div className="overflow-y-auto overflow-x-hidden" style={{ maxHeight: `${maxMenuHeight}px` }}>
             {isLoading ? (
               <div className="px-3 py-2 text-sm text-muted-foreground">
                 Loading...
@@ -228,15 +228,15 @@ const AsyncSelectDropdown: React.FC<MultiSelectCompPropInf> = ({
                   <div
                     key={option.id}
                     className={`
-                      px-3 py-2 text-sm cursor-pointer hover:bg-accent hover:text-accent-foreground
+                      px-3 py-2 text-sm cursor-pointer hover:bg-accent hover:text-accent-foreground transition-colors
                       ${isSelected ? 'bg-accent text-accent-foreground' : ''}
                     `}
                     onClick={() => handleOptionSelect(option)}
                   >
                     <div className="flex items-center justify-between">
-                      <span>{option.label}</span>
+                      <span className="truncate">{option.label}</span>
                       {isSelected && isMulti && (
-                        <span className="text-primary">✓</span>
+                        <span className="text-primary ml-2 flex-shrink-0">✓</span>
                       )}
                     </div>
                   </div>

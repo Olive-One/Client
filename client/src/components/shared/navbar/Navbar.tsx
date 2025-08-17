@@ -1,37 +1,72 @@
-"use client"
+"use client";
 
-import React from 'react';
-import { cn } from '@/lib/utils';
-import type { NavbarRoute } from '@/types/navbar.types';
-import NavbarMenuItem from './NavbarMenuItem';
+import React from "react";
+import type { NavbarRoute } from "@/types/navbar.types";
+import type { UserData } from "@/types/user.types";
+import { NavUser } from "./NavUser";
+import NavbarMenuItem from "./NavbarMenuItem";
+import oliveOneLogoLight from "../../../assets/oliveone-logo-light.svg";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarRail,
+} from "@/components/ui/sidebar";
 
 interface NavbarProps {
-	routes: NavbarRoute[];
-	className?: string;
+  routes: NavbarRoute[];
+  user?: UserData;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ routes, className, ...rest }) => {
-	return (
-		<div 
-			className={cn(
-				"h-full flex flex-col",
-				className
-			)} 
-			{...rest}
-		>
-			{/* Sidebar header */}
-			{/* <div className="p-4 border-b border-border">
-				<h2 className="text-lg font-semibold text-foreground">Navigation</h2>
-			</div>
-			 */}
-			{/* Sidebar menu items */}
-			<div className="flex-1 overflow-y-auto p-4 space-y-2">
-				{routes.map((route) => (
-					<NavbarMenuItem key={route.path} route={route} />
-				))}
-			</div>
-		</div>
-	);
+const Navbar: React.FC<NavbarProps> = ({ routes, user }) => {
+  return (
+    <Sidebar collapsible="icon" variant="sidebar">
+      <SidebarHeader>
+        <div className="flex items-center justify-center h-12 px-2">
+          <img
+            src={oliveOneLogoLight}
+            alt="OliveOne Logo"
+            className="h-12 w-auto object-contain group-data-[collapsible=icon]:h-6"
+          />
+        </div>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {routes.map((route) => (
+                <NavbarMenuItem key={route.path} route={route} />
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        {user && (
+          <NavUser
+            user={{
+              name: user.firstName + " " + user.lastName || "Unknown User",
+              email: user.email || "unknown@example.com",
+              avatar:
+                user.profilePic ||
+                "https://ui-avatars.com/api/?name=" +
+                  user.firstName +
+                  "+" +
+                  user.lastName,
+            }}
+          />
+        )}
+      </SidebarFooter>
+
+      <SidebarRail />
+    </Sidebar>
+  );
 };
 
 export default Navbar;

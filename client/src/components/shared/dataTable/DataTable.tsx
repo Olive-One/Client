@@ -12,7 +12,6 @@ import {
 } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowUpDown, ChevronUp, ChevronDown, Search } from 'lucide-react';
 import { CustomPagination } from '../customPagination/CustomPagination';
 import { PAGE_SIZE_OPTIONS } from '@/constants/pagination.constants';
@@ -95,29 +94,28 @@ export function DataTable<Data extends object>({
   };
 
   return (
-    <Card className="border-none shadow-none">
+    <div className='space-y-4'>
       {title && (
-        <CardHeader>
-          <CardTitle className="text-foreground">{title}</CardTitle>
-        </CardHeader>
+        <div className="flex items-center">
+          <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+        </div>
       )}
       
-      <CardContent className="p-0">
-        {/* Loading indicator */}
-        {isSortLoading && (
-          <div className="flex justify-center py-2">
-            <div className="h-1 w-full bg-muted overflow-hidden">
-              <div className="h-full bg-primary animate-pulse"></div>
-            </div>
+      {/* Loading indicator */}
+      {isSortLoading && (
+        <div className="flex justify-center py-2">
+          <div className="h-1 w-full bg-muted overflow-hidden">
+            <div className="h-full bg-primary animate-pulse"></div>
           </div>
-        )}
+        </div>
+      )}
 
-        <div className="overflow-x-auto">
-          <Table>
+      <div className='overflow-hidden rounded-md border'>
+        <Table>
             {showHeader && (
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id} className="bg-muted hover:bg-muted border-0">
+                  <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
                       const meta = header.column.columnDef.meta as CellAlignment;
                       const canSort = sortEnabledColumns.includes(header.column.id);
@@ -151,35 +149,34 @@ export function DataTable<Data extends object>({
             )}
             
             <TableBody>
-              {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className="hover:bg-muted/25 border-b border-gray-500">
-                  {row.getVisibleCells().map((cell) => {
-                    const meta = cell.column.columnDef.meta as CellAlignment;
-                    
-                    return (
-                      <TableCell
-                        key={cell.id}
-                        className={meta?.cellAlign ? `text-${meta.cellAlign}` : 'text-left' + ' py-4'}
-                      >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
-              
-              {table.getRowModel().rows.length === 0 && (
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => {
+                      const meta = cell.column.columnDef.meta as CellAlignment;
+                      
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          className={meta?.cellAlign ? `text-${meta.cellAlign}` : 'text-left'}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))
+              ) : (
                 <TableRow>
-                  <TableCell colSpan={memoizedColumns.length} className="text-center py-12">
-                    <div className="flex flex-col items-center gap-4">
-                      {emptyStateIcon || (
-                        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
-                          <Search className="w-8 h-8 text-muted-foreground" />
+                  <TableCell colSpan={memoizedColumns.length} className="h-24 text-center">
+                    <div className="flex flex-col items-center gap-2">
+                      {emptyStateIcon && (
+                        <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center">
+                          {emptyStateIcon}
                         </div>
                       )}
-                      <div>
-                        <h3 className="text-foreground font-medium mb-1">No data found</h3>
-                        <p className="text-muted-foreground text-sm">{emptyStateMessage}</p>
+                      <div className="text-muted-foreground">
+                        {emptyStateMessage || 'No results.'}
                       </div>
                     </div>
                   </TableCell>
@@ -187,24 +184,31 @@ export function DataTable<Data extends object>({
               )}
             </TableBody>
           </Table>
-        </div>
-
-        {showPagination && table.getRowModel().rows.length > 0 && (
-          <div className="flex items-center justify-between p-4 border-t border-gray-500">
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground font-medium">
-                Results per page
-              </span>
+      </div>
+      
+      {showPagination && table.getRowModel().rows?.length > 0 && (
+        <div className='flex items-center justify-between overflow-clip px-2' style={{ overflowClipMargin: 1 }}>
+          <div className='text-muted-foreground hidden flex-1 text-sm sm:block'>
+            Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
+            {Math.min(
+              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+              totalCount
+            )}{' '}
+            of {totalCount} entries
+          </div>
+          <div className='flex items-center sm:space-x-6 lg:space-x-8'>
+            <div className='flex items-center space-x-2'>
+              <p className='hidden text-sm font-medium sm:block'>Rows per page</p>
               <Select
                 value={table.getState().pagination.pageSize.toString()}
                 onValueChange={(value) => {
                   table.setPageSize(Number(value));
                 }}
               >
-                <SelectTrigger className="w-20">
-                  <SelectValue />
+                <SelectTrigger className='h-8 w-[70px]'>
+                  <SelectValue placeholder={table.getState().pagination.pageSize} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent side='top'>
                   {PAGE_SIZE_OPTIONS.map((pageSize) => (
                     <SelectItem key={pageSize} value={pageSize.toString()}>
                       {pageSize}
@@ -213,17 +217,10 @@ export function DataTable<Data extends object>({
                 </SelectContent>
               </Select>
             </div>
-
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-muted-foreground">
-                Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
-                {Math.min(
-                  (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-                  totalCount
-                )}{' '}
-                of {totalCount} entries
-              </div>
-              
+            <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
+              Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            </div>
+            <div className='flex items-center space-x-2'>
               <CustomPagination
                 currentPage={table.getState().pagination.pageIndex + 1}
                 totalPageCount={table.getPageCount()}
@@ -233,8 +230,8 @@ export function DataTable<Data extends object>({
               />
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </div>
+      )}
+    </div>
   );
 }

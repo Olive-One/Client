@@ -1,7 +1,6 @@
-
-
 import AdminIcon from '@/components/shared/icon/AdminIcon';
 import DashboardIcon from '@/components/shared/icon/DashboardIcon';
+import PaymentsIcon from '@/components/shared/icon/PaymentsIcon';
 import RolesIcon from '@/components/shared/icon/RolesIcon';
 import UsersIcon from '@/components/shared/icon/UsersIcon';
 import type { NavbarRouteMap } from '@/types/navbar.types';
@@ -51,6 +50,12 @@ const navbarRoutesMap: { [key: string]: NavbarRouteMap } = {
     icon: UsersIcon,
     path: '/organizations',
     type: 'menu_organizations',
+  },
+  menu_payments: {
+    title: 'navMenu.payments',
+    icon: PaymentsIcon,
+    path: '/payments',
+    type: 'menu_payments',
   },
   menu_admin: {
     title: 'navMenu.admin.title',

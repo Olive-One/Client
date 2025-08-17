@@ -1,135 +1,89 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { RoutePaths } from "@/constants/routePaths.constants";
-// import UserProfile from '../userProfile/UserProfile';
-import oliveOneLogoLight from "../../../assets/oliveone-logo-light.svg";
+import React from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useLogout } from "@/hooks/useAuthentication";
 import { ThemeToggle } from "@/theme/ThemeSelector";
-import ConfirmationModal from "../confirmationModal/ConfirmationModal";
-import ConfirmationButtonGroup from "../confirmationModal/ConfirmationButtonGroup";
-// import LanguageSelector from '../LanguageSelector/LanguageSelector';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import useStateStore from "@/store/store-index";
+import { NavUser } from "../navbar/NavUser";
 
-const Header: React.FC = () => {
-  const navigate = useNavigate();
-  const { mutate: logout } = useLogout();
-  const [isOpen, setIsOpen] = useState(false);
+interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
+  fixed?: boolean;
+}
 
-  const onOpen = () => setIsOpen(true);
-  const onClose = () => setIsOpen(false);
+const Header: React.FC<HeaderProps> = ({
+  className,
+  children,
+  ...props
+}) => {
+  const [offset, setOffset] = React.useState(0);
+  const { profile } = useStateStore();
 
+  React.useEffect(() => {
+    const onScroll = () => {
+      setOffset(document.body.scrollTop || document.documentElement.scrollTop);
+    };
 
-  const handleLogoutConfirm = () => {
-    logout();
-    onClose();
-  };
+    document.addEventListener("scroll", onScroll, { passive: true });
 
-  const handleLogout = () => {
-    onOpen();
+    return () => document.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const getUserInitials = (name?: string) => {
+    if (!name) return "U";
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase()
+      .substring(0, 2);
   };
 
   return (
     <header
       className={cn(
-        "flex items-center justify-between",
-        "bg-card",
-        "text-foreground",
-        "py-6 px-4 md:px-8",
-        "shadow-md",
-        "h-20",
-        "sticky top-0 z-50",
-        "transition-colors duration-200"
+        "bg-card flex h-16 items-center gap-3 p-4 sm:gap-4 sticky top-0 z-50 justify-between",
+        "border-b border-border/10 shadow-sm",
+        offset > 10
+          ? "shadow-md border-border/20"
+          : "shadow-sm border-border/10",
+        className
       )}
+      {...props}
     >
-      <div className="flex items-center">
-        <div
-          className={cn(
-            "cursor-pointer",
-            "h-full sm:h-[60px]",
-            "w-[100px] sm:w-[260px]",
-            "mr-2",
-            "overflow-hidden",
-            "rounded-sm"
-          )}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              navigate(RoutePaths.DASHBOARD);
+      {/* Sidebar trigger is now passed as children from AppLayout */}
+
+      {/* Search Component */}
+      <div className="flex-1 max-w-sm flex items-center gap-2 flex-row">{children}</div>
+
+      {/* Right side items */}
+      <div className="flex items-center gap-6">
+        <ThemeToggle />
+
+        {/* Profile Avatar */}
+        <Avatar className="h-8 w-8">
+          <AvatarImage
+            src={
+              profile?.profilePic ||
+              "https://ui-avatars.com/api/?name=" +
+                profile?.firstName +
+                "+" +
+                profile?.lastName
             }
-          }}
-          aria-label="Navigate to dashboard"
-        >
-          <img
-            src={oliveOneLogoLight}
-            alt="OliveOne Logo"
-            // className="w-full h-full object-contain filter dark:invert dark:brightness-0 dark:contrast-100"
-            className="w-full h-full object-contain"
+            alt={profile?.firstName + " " + profile?.lastName || "User"}
           />
-        </div>
+          <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
+            {getUserInitials(profile?.firstName + " " + profile?.lastName)}
+          </AvatarFallback>
+        </Avatar>
+        {/* {profile && (
+					<NavUser 
+						user={{
+							name: profile.firstName + ' ' + profile.lastName || 'Unknown User',
+							email: profile.email || 'unknown@example.com',
+							avatar: profile.profilePic || 'https://ui-avatars.com/api/?name=' + profile.firstName + '+' + profile.lastName
+						}} 
+					/>
+				)} */}
       </div>
-
-      <div className="flex items-center space-x-2 md:space-x-4">
-        <ThemeToggle />        
-
-        {/* Logout Button */}
-        <Button 
-        variant="outline"
-          size="sm" 
-          onClick={handleLogout}
-          className="text-muted-foreground hover:text-foreground hover:bg-accent w-9 h-9 p-0"
-          aria-label="Logout"
-        >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-          </svg>
-        </Button>
-
-        {/* User Avatar */}
-        <div className="h-8 w-8 bg-muted rounded-full border border-border flex items-center justify-center transition-colors">
-          <svg
-            className="h-4 w-4 text-muted-foreground"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
-        </div>
-      </div>
-      <ConfirmationModal
-        isOpen={isOpen}
-        onClose={onClose}
-        header="Are you sure you want to logout"
-        subHeader="You will be logged out of your account and redirected to the login page."
-        showCloseButton={false}
-      >
-        <ConfirmationButtonGroup
-          cancelButtonText="Cancel"
-          submitButtonText="Logout"
-          onCancel={onClose}
-          onSubmit={handleLogoutConfirm}
-        />
-      </ConfirmationModal>
     </header>
   );
 };

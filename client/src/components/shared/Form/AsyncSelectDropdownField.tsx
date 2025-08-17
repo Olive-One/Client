@@ -19,6 +19,7 @@ type AsyncSelectFieldProps<TFieldValues extends FieldValues = FieldValues> = {
   isClearable?: boolean;
   isRequired?: boolean;
   className?: string;
+  maxMenuHeight?: number;
 };
 
 export const AsyncSelectDropdownField = <TFieldValues extends FieldValues = FieldValues>({
@@ -36,6 +37,7 @@ export const AsyncSelectDropdownField = <TFieldValues extends FieldValues = Fiel
   isClearable = true,
   isRequired = false,
   className = '',
+  maxMenuHeight = 240,
 }: AsyncSelectFieldProps<TFieldValues>) => {
   return (
     <div className={`space-y-2 ${className}`}>
@@ -62,6 +64,7 @@ export const AsyncSelectDropdownField = <TFieldValues extends FieldValues = Fiel
               isDisabled={isDisabled}
               cacheOptions={cacheOptions}
               isClearable={isClearable}
+              maxMenuHeight={maxMenuHeight}
             />
             {error && (
               <p className="text-sm text-red-500 mt-1">
