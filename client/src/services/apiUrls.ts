@@ -100,6 +100,28 @@ const API_URLS = {
     DIOCESES: '/dropdown/context/dioceses',
     CHURCHES: '/dropdown/context/churches',
     FAMILIES: '/dropdown/context/families',
+    FAMILY_MEMBERS: '/dropdown/context/:familyId/members',
+  },
+  PAYMENTS: {
+    LIST: '/payments/list',
+    INCOME: {
+      LIST: '/payments/income/list',
+      OVERVIEW: '/payments/income/overview',
+      EXPORT: '/payments/income/export',
+    },
+    EXPENSE: {
+      LIST: '/payments/expense/list',
+      OVERVIEW: '/payments/expense/overview',
+      EXPORT: '/payments/expense/export',
+      CREATE: '/payments/expense/create',
+    },
+    CREATE: '/payments/create',
+    UPDATE: '/payments/update/:id',
+    DELETE: '/payments/delete/:id',
+    CATEGORIES: '/payments/categories',
+    SOURCES: '/payments/sources',
+    CURRENCIES: '/payments/currencies',
+    EXPORT: '/payments/export',
   },
 };
 
