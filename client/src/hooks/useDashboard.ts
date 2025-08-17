@@ -155,9 +155,8 @@ export function useAgeGroupDistribution() {
   return useQuery({
     queryKey: ['dashboard', 'age-distribution'],
     queryFn: () => fetchData<{ success: boolean; data: AgeGroupDistribution }>(API_URLS.DASHBOARD.AGE_DISTRIBUTION, authAxiosInstance),
-    staleTime: 1000 * 60 * 10, // 10 minutes
-    gcTime: 1000 * 60 * 20, // 20 minutes
-    refetchOnWindowFocus: false,
+    staleTime: 0, // Don't cache to avoid stale data between different users
+    gcTime: 0, // Don't keep in garbage collection
   });
 }
 

@@ -4,7 +4,7 @@ import PersistLogin from '@/components/shared/persistLogin/PersistLogin';
 // import RoleGuard from '@/components/shared/utility/RoleGuard';
 import { RoutePaths } from '@/constants/routePaths.constants';
 import { Navigate, Route, useRouteError } from 'react-router-dom';
-// import ChangePassword from '@/pages/ChangePassword';
+import ChangePassword from '@/pages/ChangePassword';
 // import ChurchesList from '@/pages/church/ChurchesList';
 import Dashboard from '@/pages/Dashboard';
 // import DiocesesList from '@/pages/diocese/DiocesesList';
@@ -186,6 +186,6 @@ export const AuthenticatedRoutes = (
 export const UnauthenticatedRoutes = (
   <Route>
     <Route element={<Login />} path="/login" />
-    {/* <Route element={<ChangePassword />} path="change-temp-password" /> */}
+    <Route element={<ChangePassword />} path="/change-temp-password" />
   </Route>
 );

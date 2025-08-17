@@ -49,6 +49,8 @@ const API_URLS = {
     FAMILY_STATS: '/dashboard/family-stats',
     FAMILY_DISTRIBUTION: '/dashboard/family-distribution',
     AGE_DISTRIBUTION: '/dashboard/age-distribution',
+    APP_GROWTH_METRICS: '/dashboard/app-growth-metrics',
+    INCOME_EXPENSE_TRENDS: '/dashboard/income-expense-trends',
   },
   DIOCESE: {
     CREATE: '/diocese/create',
@@ -77,6 +79,7 @@ const API_URLS = {
     LIST: '/family/list',
     ENABLE: '/family/enable/:id',
     DISABLE: '/family/disable/:id',
+    MEMBERS: '/family/:familyId/members',
   },
   ORGANIZATION: {
     CREATE: '/organization/create',
