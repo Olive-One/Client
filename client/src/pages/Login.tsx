@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PasswordInputField } from '@/components/shared/Form/PasswordInputField';
 import oliveoneLogo from "@/assets/oliveone-logo-light.svg";
 import { useLogin } from "@/hooks/useAuthentication";
 import { navbarRoutesMap } from "@/constants/navbarRoutesMap";
@@ -100,23 +101,21 @@ export default function LoginPage() {
                 )}
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-foreground">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  placeholder="Enter your password"
-                  className="border-border focus:border-primary focus:ring-primary"
-                  {...register('password', { 
+                <PasswordInputField
+                  name="password"
+                  label="Password"
+                  register={register}
+                  validation={{
                     required: 'Password is required',
                     minLength: {
                       value: 6,
                       message: 'Password must be at least 6 characters'
                     }
-                  })}
+                  }}
+                  error={errors.password}
+                  placeholder="Enter your password"
+                  className="border-border focus:border-primary focus:ring-primary"
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password.message}</p>
-                )}
               </div>
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center space-x-2">

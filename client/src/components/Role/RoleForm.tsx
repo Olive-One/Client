@@ -60,26 +60,13 @@ const RoleForm: React.FC<RoleFormProps> = ({
 
   useEffect(() => {
     if (formData) {
-      console.log("formData present", formData);
       reset(formData);
       setSelectedPermissionIds(formData.permissions || []);
       setSelectedChildRoleIds(formData.childRoles || []);
     }
-    console.log("formData not present");
   }, [formData, reset]);
 
-  // // Group permissions by category
-  // const groupedPermissions = React.useMemo(() => {
-  //   if (!permissionsList?.data?.permissions) return {};
-    
-  //   return permissionsList.data.permissions.reduce((acc, permission) => {
-  //     if (!acc[permission.category]) {
-  //       acc[permission.category] = [];
-  //     }
-  //     acc[permission.category].push(permission);
-  //     return acc;
-  //   }, {} as Record<string, typeof permissionsList.data.permissions>);
-  // }, [permissionsList]);
+
 
   return (
     <CustomModal
