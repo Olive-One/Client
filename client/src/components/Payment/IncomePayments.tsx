@@ -143,7 +143,10 @@ export function IncomePayments({ onExport }: IncomePaymentsProps = {}) {
         header: "Status",
         accessorKey: "status",
         cell: ({ row }) => {
-          const colors = PAYMENT_STATUS_COLORS[row.original.status as keyof typeof PAYMENT_STATUS_COLORS] || PAYMENT_STATUS_COLORS.default;
+          const colors =
+            PAYMENT_STATUS_COLORS[
+              row.original.status as keyof typeof PAYMENT_STATUS_COLORS
+            ] || PAYMENT_STATUS_COLORS.default;
           return (
             <StatusBadge
               statusText={row.original.status}
@@ -226,10 +229,9 @@ export function IncomePayments({ onExport }: IncomePaymentsProps = {}) {
             <CardDescription>Pending Amount</CardDescription>
             <CardTitle className="text-2xl text-foreground flex items-center">
               <IndianRupee className="w-5 h-5" />
-              {IncomeOverview?.data.pendingAmount.toLocaleString(
-                "en-IN",
-                { minimumFractionDigits: 2 }
-              ) || 0}
+              {IncomeOverview?.data.pendingAmount.toLocaleString("en-IN", {
+                minimumFractionDigits: 2,
+              }) || 0}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -248,19 +250,16 @@ export function IncomePayments({ onExport }: IncomePaymentsProps = {}) {
             <CardDescription>Overdue Amount</CardDescription>
             <CardTitle className="text-2xl text-foreground flex items-center ">
               <IndianRupee className="w-5 h-5" />
-              {IncomeOverview?.data.overdueAmount.toLocaleString(
-                "en-IN",
-                { minimumFractionDigits: 2 }
-              ) || 0}
+              {IncomeOverview?.data.overdueAmount.toLocaleString("en-IN", {
+                minimumFractionDigits: 2,
+              }) || 0}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2 text-sm">
               <TrendingDown className="w-4 h-4 text-red-600" />
               <span className="text-red-600">Needs attention</span>
-              <span className="text-muted-foreground">
-                follow up required
-              </span>
+              <span className="text-muted-foreground">follow up required</span>
             </div>
           </CardContent>
         </Card>
@@ -276,7 +275,12 @@ export function IncomePayments({ onExport }: IncomePaymentsProps = {}) {
               <Input
                 placeholder="Search payments, members, or transaction numbers..."
                 value={filterCriteria.search}
-                onChange={(e) => setFilterCriteria({...filterCriteria, search: e.target.value})}
+                onChange={(e) =>
+                  setFilterCriteria({
+                    ...filterCriteria,
+                    search: e.target.value,
+                  })
+                }
                 className="pl-10"
               />
             </div>
@@ -319,7 +323,8 @@ export function IncomePayments({ onExport }: IncomePaymentsProps = {}) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
         <div>
           <h3 className="text-lg font-semibold text-foreground">
-            Income Transactions ({payments?.data.totalCount || 0} payments found)
+            Income Transactions ({payments?.data.totalCount || 0} payments
+            found)
           </h3>
           <p className="text-sm text-muted-foreground">
             Manage and export income payment data

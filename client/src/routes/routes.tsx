@@ -25,6 +25,8 @@ import Users from '@/pages/Users';
 import RoleGuard from '@/components/shared/utility/RoleGuard';
 import { UserPermissions } from '@/constants/role.constants';
 import Roles from '@/pages/Roles';
+import FamiliesList from '@/components/family/FamiliesList';
+import OrganizationsList from '@/components/organization/OrganizationsList';
 
 const ErrorBoundary = () => {
   useRouteError();
@@ -45,6 +47,22 @@ export const AuthenticatedRoutes = (
           }
         />
         <Route path="/payments" element={<Payments />} />
+        <Route 
+          path="/organizations" 
+          element={
+            <RoleGuard role={UserPermissions.ORGANIZATION_READ} enableRedirect>
+              <OrganizationsList />
+            </RoleGuard>
+          } 
+        />
+        <Route 
+          path="/families" 
+          element={
+            <RoleGuard role={UserPermissions.FAMILY_READ} enableRedirect>
+              <FamiliesList />
+            </RoleGuard>
+          } 
+        />
         <Route path="/admin">
           <Route element={<RoleGuard role={UserPermissions.ADMIN_READ} enableRedirect><Navigate to="/admin/users" replace /></RoleGuard>} />
           <Route

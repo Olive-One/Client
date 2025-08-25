@@ -107,7 +107,7 @@ const AppLayout: React.FC<LayoutProps> = () => {
               />
               <Separator orientation="vertical" className="h-6" />
             </Header>
-            <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
+            <div className="flex-1 overflow-y-auto overflow-x-auto p-4">
               <AppLoader />
             </div>
           </SidebarInset>
@@ -128,7 +128,7 @@ const AppLayout: React.FC<LayoutProps> = () => {
           <Separator orientation="vertical" className="h-6" />
           <Search />
         </Header>
-        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex-1 overflow-y-auto overflow-x-auto">
           <div className="h-full" ref={scrollableDivRef}>
             <ScrollToTop scrollableDivRef={scrollableDivRef}>
               <Outlet />

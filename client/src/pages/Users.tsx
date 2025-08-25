@@ -256,7 +256,7 @@ const Users: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+      <div className="mx-4 py-4 lg:mx-12 lg:py-8 2xl:mx-16">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div className="flex items-center gap-3">
